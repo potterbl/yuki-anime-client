@@ -1,0 +1,51 @@
+.main__screen{
+    background-image: url('../images/mainBG.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main__inner{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255,255,255,0) 100%);
+    padding: 94px 155px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.main__text-box{
+    display: grid;
+    width: 600px;
+    row-gap: 80px;
+}
+.main__text-box h1{
+    font-size: 68px;
+    text-align: left;
+    word-break: break-word;
+}
+.gradient{
+    background: linear-gradient(90deg, #99CCFF 0%, #9933FF 100%);
+    background-clip: text;
+    color: transparent;
+}
+.main__sign-up{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.sign{
+    padding: 15px 23px;
+    border-radius: 26px;
+    background: linear-gradient(120deg, #FFBB54 0%, #FF8754 100%);
+    color: black;
+    font-size: 18px;
+    letter-spacing: 4px;
+    border:0;
+    outline: none;
+}

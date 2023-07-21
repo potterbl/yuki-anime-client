@@ -1,0 +1,72 @@
+.trending{
+    width: 100vw;
+    height: 604px;
+    padding: 93px 235px;
+    box-sizing: border-box;
+    position: relative;
+}
+.carousel-trending{
+    transition: all .6s ease-out;
+    width: 180%;
+    height: calc(100% - 28px);
+    display: flex;
+    column-gap: 10px;
+    /*transform: translateX(-44.44%);*/
+}
+.trending-box{
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    border-radius: 16px;
+}
+.arrow-left{
+    opacity: 0.8;
+    background-image: url('../images/arrow-left.svg'), linear-gradient(90deg, rgb(0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    position: absolute;
+    left: 0;
+    top: 93px;
+    width: 235px;
+    height: 418px;
+    outline: none;
+}
+.arrow-right{
+    opacity: 0.8;
+    background-image: url('../images/arrow-right.svg'), linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgb(0,0,0) 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    position: absolute;
+    right: 0;
+    top: 93px;
+    width: 235px;
+    height: 418px;
+    outline: none;
+}
+.carousel-buttons{
+    position: absolute;
+    display: flex;
+    column-gap: 25px;
+    width: max-content;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.carousel-radio{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0;
+    margin: 0;
+    background-color: #505050;
+    transition: all .4s ease-in;
+}
+.carousel-active{
+    background-color: white;
+}
