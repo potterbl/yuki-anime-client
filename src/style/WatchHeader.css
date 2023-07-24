@@ -1,0 +1,34 @@
+.watch__header{
+    padding: 48px 48px;
+    display: flex;
+    width: 100%;
+    height: max-content;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top:0;
+    left: 0;
+}
+.back-arrow{
+    height: 48px;
+    width: 48px;
+    border: 0;
+    background-color: transparent;
+    background-image: url('../images/arrowBack.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: none;
+}
+.arrow-enabled{
+    display: block;
+}
+.watch__header-left{
+    display: flex;
+    align-items: center;
+    column-gap: 48px;
+}
+.watch__header-buttons{
+    height: 48px;
+    width: max-content;
+    position: relative;
+}
