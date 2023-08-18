@@ -1,39 +1,49 @@
-import React, {useRef, useState, useEffect} from 'react';
-import '../style/Search.css'
-const Search = () => {
-    const [isSearch, setIsSearch] = useState(false)
-    const [search, setSearch] = useState('')
-    const [isEmpty, setIsEmpty] = useState(true)
-    const searchRef = useRef(null)
+import React, { useRef, useState, useEffect } from 'react';
+import '../style/Search.css';
+import axios from "axios";
+
+const Search = (props) => {
+    const [isSearch, setIsSearch] = useState(false);
+    const [search, setSearch] = useState('');
+    const [isEmpty, setIsEmpty] = useState(true);
+    const searchRef = useRef(null);
+
+    const [animes, setAnimes] = useState([])
 
     useEffect(() => {
         if (isSearch) {
             searchRef.current.focus();
         } else {
-            setSearch('')
+            setSearch('');
         }
     }, [isSearch]);
 
     useEffect(() => {
-        if(search === ''){
-            setIsEmpty(true)
-        } else {
-            setIsEmpty(false)
-        }
-    }, [search])
+        setIsEmpty(search === '');
+    }, [search]);
 
-    const anime = ['barby', 'ryan gosling', 'naruto']
+    const getAnimes = () => {
+        axios
+            .get('https://yuki-anime.up.railway.app/collections')
+            .then(res => {
+                setAnimes(res.data)
+                console.log(123)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    useEffect(() => {
+        getAnimes()
+    }, [])
 
     return (
         <div className="search">
             <button
-                className={`
-                search-button 
-                ${isSearch ? '' : 'search-button-enabled'}
-                `}
+                className={`search-button ${isSearch ? '' : 'search-button-enabled'}`}
                 onClick={() => setIsSearch(true)}
-            >
-            </button>
+            ></button>
             <input
                 type="text"
                 value={search}
@@ -43,11 +53,11 @@ const Search = () => {
                 ref={searchRef}
             />
             <div className={`search-results ${isEmpty ? '' : 'search-results-enabled'}`}>
-                {anime
-                    .filter((a) => a.includes(search))
+                {animes
+                    .filter((anime) => anime.title.toLowerCase().includes(search.toLowerCase()))
                     .map((anime) => (
-                        <div className="search-result" key={anime}>
-                            <p className="result-paragraph">{anime}</p>
+                        <div className="search-result" key={anime.title}>
+                            <p className="result-paragraph">{anime.title}</p>
                         </div>
                     ))}
             </div>

@@ -6,6 +6,7 @@
     align-items: center;
     justify-content: space-between;
     position: fixed;
+    z-index: 4;
     top:0;
     left: 0;
 }
@@ -31,4 +32,7 @@
     height: 48px;
     width: max-content;
     position: relative;
+    display: flex;
+    column-gap: 24px;
+    align-items: center;
 }

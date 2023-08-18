@@ -2,14 +2,14 @@
     height: 100%;
     display: flex;
     align-items: center;
-    z-index: 4;
 }
 .search-button {
     height: 48px;
     width: 0;
     background-image: url('../images/Search.svg');
-    background-size: 48px 48px;
+    background-size: cover;
     background-color: transparent;
+    background-position: center 4px;
     border: 0;
     border-radius: 0;
     transition: all .6s ease;
@@ -41,8 +41,11 @@
     background-color: #3b3b3b;
     position: fixed;
     top: 144px;
-    right: 0;
+    right: 108px;
     display: none;
+}
+.search-results::-webkit-scrollbar{
+    width: 0;
 }
 .search-results-enabled {
     display: block;

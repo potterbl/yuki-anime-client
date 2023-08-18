@@ -1,0 +1,28 @@
+.history-page{
+    width: 100%;
+    min-height: calc(100vh - 144px);
+    margin-top: 144px;
+    margin-bottom: 48px;
+}
+.history__heading{
+    padding: 0 48px;
+    display: grid;
+    row-gap: 24px;
+    margin-bottom: 24px;
+}
+.history{
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 24px;
+    width: 100%;
+    padding: 0 48px;
+    height: auto;
+}
+.animetest{
+    width: 100%;
+    background-color: #fff;
+    aspect-ratio: 9 / 16;
+    border: 0;
+    background-position: center;
+    background-size: cover;
+}
