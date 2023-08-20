@@ -1,6 +1,5 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import MainPage from "./pages/MainPage";
 import MainWatch from "./pages/MainWatch";
 import WatchPage from "./pages/WatchPage";
 import Sign from "./pages/Sign";

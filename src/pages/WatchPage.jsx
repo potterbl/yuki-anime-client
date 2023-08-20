@@ -11,20 +11,19 @@ const WatchPage = () => {
 
     const token = localStorage.getItem('token')
 
-    const getAnime = () => {
-        axios
-            .get(`https://yuki-anime.up.railway.app/collections/${id}`)
-            .then((res) => {
-                setAnime(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     useEffect(() => {
-        getAnime();
-    }, []);
+        (() => {
+            axios
+                .get(`https://yuki-anime.up.railway.app/collections/${id}`)
+                .then((res) => {
+                    setAnime(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })()
+
+    }, [id]);
 
     return (
         <div className="watch__page">

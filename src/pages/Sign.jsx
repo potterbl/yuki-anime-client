@@ -15,7 +15,7 @@ const Sign = () => {
         if (method !== 'login' && method !== 'sign') {
             navigate('/');
         }
-    }, [method]);
+    }, [method, navigate]);
 
     const getMe = () => {
         const token = localStorage.getItem('token')

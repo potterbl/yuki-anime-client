@@ -12,39 +12,38 @@ const HistoryPage = () => {
 
     const token = localStorage.getItem('token')
 
-    const getAnime = () => {
-        axios
-            .get('https://yuki-anime.up.railway.app/collections')
-            .then((res) => {
-                setAnime(res.data);
-            })
-            .catch((err) => {
-                navigate('/auth/login');
-            });
-    }
-
-    const getMe = () => {
-        if (token) {
-            axios
-                .post('https://yuki-anime.up.railway.app/auth/getMe', {
-                    token: token
-                })
-                .then((res) => {
-                    setMe(res.data)
-                })
-                .catch((err) => {
-                    navigate('/auth/login')
-                })
-        } else {
-            navigate('/auth/login')
-        }
-    }
 
     useEffect(() => {
-        getMe()
-        getAnime()
-    }, [])
+        const getMe = () => {
+            if (token) {
+                axios
+                    .post('https://yuki-anime.up.railway.app/auth/getMe', {
+                        token: token
+                    })
+                    .then((res) => {
+                        setMe(res.data)
+                    })
+                    .catch((err) => {
+                        navigate('/auth/login')
+                    })
+            } else {
+                navigate('/auth/login')
+            }
+        }
 
+        (() => {
+            axios
+                .get('https://yuki-anime.up.railway.app/collections')
+                .then((res) => {
+                    setAnime(res.data);
+                })
+                .catch((err) => {
+                    navigate('/auth/login');
+                });
+        })()
+
+        getMe();
+    }, [navigate, token])
     return (
         <>
             <WatchHeader isAnime={true}/>

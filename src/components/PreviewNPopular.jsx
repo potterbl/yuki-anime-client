@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../style/PreviewNPopular.css'
 import {useNavigate} from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import {Scrollbar, A11y} from "swiper/modules";
-import axios from "axios";
 
 const PreviewNPopular = (props) => {
     const navigate = useNavigate()

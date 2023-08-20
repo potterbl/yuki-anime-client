@@ -10,18 +10,19 @@ const UserMenu = (props) => {
 
     const [isMenu, setIsMenu] = useState(false);
 
-    const handleOutsideClick = (event) => {
-        if (isMenu && !event.target.closest(".user-menu") && !event.target.closest(".user-menu__btn")) {
-            setIsMenu(false);
-        }
-    };
-
     useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (isMenu && !event.target.closest(".user-menu") && !event.target.closest(".user-menu__btn")) {
+                setIsMenu(false);
+            }
+        };
+
         document.addEventListener("mousedown", handleOutsideClick);
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [isMenu]);
+
     return (
         <>
             <button

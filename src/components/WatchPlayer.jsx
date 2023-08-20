@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../style/WatchPlayer.css'
 import VideoPlayer from "./VideoPlayer";
 import {useNavigate} from "react-router-dom";
@@ -31,7 +31,7 @@ const WatchPlayer = (props) => {
                             {
                                 seasonArr.map((episodeObj, episodeIndex) => (
                                     <div key={`season-${seasonIndex}-episode-${episodeIndex}`}
-                                         className={`watch__player-right-row ${seasonIndex + 1 == season && episodeObj.episode == episode ? 'watch__player-right-row-active' : ''}`}
+                                         className={`watch__player-right-row ${(seasonIndex + 1).toString() === season.toString() && episodeObj.episode.toString() === episode.toString() ? 'watch__player-right-row-active' : ''}`}
                                         onClick={() => {
                                             navigate(`/watch/anime/${id}/ep/${episodeIndex + 1}/s/${seasonIndex + 1}`)
                                             window.location.reload()
