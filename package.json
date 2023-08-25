@@ -2,6 +2,7 @@
   "name": "yuki",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://yuki-animes.netlify.app/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@sweetalert2/theme-dark": "^5.0.15",
