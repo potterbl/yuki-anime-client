@@ -40,8 +40,7 @@ const VideoPlayer = ({ anime, token, id, season, episode }) => {
 
     useEffect(() => {
         fetchVideo(id,season,episode)
-
-    }, [])
+    }, [episode, fetchVideo, id, season])
 
 
     useEffect(() => {

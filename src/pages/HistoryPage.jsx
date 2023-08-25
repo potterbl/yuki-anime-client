@@ -48,7 +48,7 @@ const HistoryPage = () => {
         } else {
             navigate('/auth/login')
         }
-    }, [token, navigate]);
+    }, [token, navigate, getHistoryArray, getMe]);
 
     useEffect(() => {
         if(animeHistory.length && Object.keys(me).length){
