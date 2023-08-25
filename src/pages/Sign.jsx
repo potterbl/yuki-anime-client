@@ -30,7 +30,7 @@ const Sign = () => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [fetchData])
 
     return (
         <div className="sign-page">

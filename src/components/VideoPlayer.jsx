@@ -41,7 +41,7 @@ const VideoPlayer = ({ anime, token, id, season, episode }) => {
             }
         }
         fetchVideo(id,season,episode)
-    }, [])
+    }, [episode, getVideo, id, season])
     useEffect(() => {
         if(videoSource !== ''){
                 const player = videojs(videoRef.current, {
@@ -105,7 +105,7 @@ const VideoPlayer = ({ anime, token, id, season, episode }) => {
                 //     console.log('aderror event fired:', error);
                 // });
         }
-    }, [videoSource])
+    }, [videoSource, episode, handleUpdateHistory, id, season, token, updatePopularity])
 
     return (
         <div className={'player-wrapper'}>

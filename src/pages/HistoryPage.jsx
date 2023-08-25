@@ -45,7 +45,7 @@ const HistoryPage = () => {
 
             useEffect(() => {
                 fetchMe()
-            }, [])
+            }, [fetchMe])
 
     useEffect(() => {
         if(animeHistory.length && Object.keys(me).length){
