@@ -15,10 +15,9 @@ const HistoryPage = () => {
 
     const token = localStorage.getItem('token')
 
-    const [getMe] = useGetMeMutation()
+    const [getMe] = useGetMeMutation();
     const [getHistoryArray] = useGetMultiplyMutation()
 
-        if (token) {
             const fetchMe = async () => {
                 const getMeRes = await getMe({token})
 
@@ -43,10 +42,10 @@ const HistoryPage = () => {
                     navigate('/auth/login')
                 }
             }
-            fetchMe()
-        } else {
-            navigate('/auth/login')
-        }
+
+            useEffect(() => {
+                fetchMe()
+            }, [])
 
     useEffect(() => {
         if(animeHistory.length && Object.keys(me).length){
