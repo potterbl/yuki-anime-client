@@ -1,102 +1,88 @@
 import React, {useEffect, useRef, useState} from 'react';
-// import video from '../images/video.mp4'
 import '../style/Player.css'
-// import videojs from 'video.js'
+import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import 'videojs-contrib-ads'
-import axios from "axios";
-import { Player } from 'player.js'
+import {useUpdateHistoryMutation} from "../store/userApi/user.api";
+import {useUpdatePopularityMutation} from "../store/collectionApi/collections.api";
+import {useGetVideoMutation} from "../store/videosApi/video.api";
 
 const VideoPlayer = ({ anime, token, id, season, episode }) => {
     const videoRef = useRef(null)
 
     const [videoSource, setVideoSource] = useState('')
 
-    // const updateHistory = (token, animeId, season, episode) => {
-    //      axios
-    //         .patch('https://yuki-anime.up.railway.app/auth/updateHistory', {
-    //             token: token,
-    //             animeId: id,
-    //             season: season,
-    //             episode: episode
-    //         })
-    //         .then(res => {
-    //             localStorage.setItem('token', res.data)
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }
+    const [updatePopularity] = useUpdatePopularityMutation()
+    const [updateHistory] = useUpdateHistoryMutation()
+    const [getVideo] = useGetVideoMutation()
+    const handleUpdateHistory = async (token, animeId, season, episode) => {
+        const payload = { token, animeId, season, episode }
 
-    const getVideo = (animeId, season, episode) => {
-        axios
-            .post('https://yuki-anime.up.railway.app/videos/getOne', {
-                animeId,
-                season,
-                episode
-            })
-            .then(res => {
-                setVideoSource(res.data.link)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        const res = await updateHistory({payload})
+        if(res.data){
+            localStorage.setItem('token', res.data.token)
+        }
+        if(res.error){
+            console.log(res.error)
+        }
     }
 
-    // const updatePopularity = (animeId) => {
-    //     axios
-    //         .patch('https://yuki-anime.up.railway.app/collections/updatePopularity')
-    //         .then(res => {
-    //
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }
+    const fetchVideo = async (animeId, season, episode) => {
+        const getVideoRes = await getVideo({animeId, season, episode})
 
-    useEffect(() => {
-        getVideo(id, season, episode)
-    }, [id, season, episode]);
+        if(getVideoRes.data){
+            setVideoSource(getVideoRes.data.link)
+            fetchPlayer()
+        }
+        if(getVideoRes.error){
+            console.log(getVideoRes.error)
+        }
+    }
 
-    useEffect(() => {
+    fetchVideo(id,season,episode)
+
+    const fetchPlayer = () => {
         if(videoSource !== ''){
-            // player = videojs(videoRef.current, {
-            //     aspectRatio: "16:9",
-            //     controls: true,
-            //     playbackRates: [0.5, 1, 1.5, 2],
-            //     controlBar: {
-            //         skipButtons: {
-            //             forward: 5,
-            //             backward: 5
-            //         }
-            //     },
-            //     userActions: {
-            //         hotkeys: function (event) {
-            //             if (event.key === "ArrowRight") {
-            //                 this.currentTime(this.currentTime() + 5);
-            //             }
-            //             if (event.key === "ArrowLeft") {
-            //                 this.currentTime(this.currentTime() - 5);
-            //             }
-            //             if (event.key === "ArrowUp") {
-            //                 this.volume(this.volume() + 0.1);
-            //             }
-            //             if (event.key === "ArrowDown") {
-            //                 this.volume(this.volume() - 0.1);
-            //             }
-            //         }
-            //     }
-            // });
-            //
-            // player.on("playing", () => {
-            //     updateHistory(token, id, season, episode)
-            //     updatePopularity(id)
+            const player = videojs(videoRef.current, {
+                aspectRatio: "16:9",
+                controls: true,
+                playbackRates: [0.5, 1, 1.5, 2],
+                controlBar: {
+                    skipButtons: {
+                        forward: 5,
+                        backward: 5
+                    }
+                },
+                userActions: {
+                    hotkeys: function (event) {
+                        if (event.key === "ArrowRight") {
+                            this.currentTime(this.currentTime() + 5);
+                        }
+                        if (event.key === "ArrowLeft") {
+                            this.currentTime(this.currentTime() - 5);
+                        }
+                        if (event.key === "ArrowUp") {
+                            this.volume(this.volume() + 0.1);
+                        }
+                        if (event.key === "ArrowDown") {
+                            this.volume(this.volume() - 0.1);
+                        }
+                    }
+                }
+            });
+
+            player.on("play", () => {
+                handleUpdateHistory(token, id, season, episode)
+                updatePopularity(id)
+            })
+
+            // player.on("ready", () => {
+            //     player.ads({
+            //         prerollTimeout: 1000,
+            //         adTagUrl: video
+            //     })
             // })
             //
-            // player.ads({
-            //     prerollTimeout: 1000,
-            //     adTagUrl: video
-            // })
             // player.on('adsready', () => {
             //     console.log('adsready event fired');
             //     player.ads.startLinearAdMode();
@@ -117,33 +103,27 @@ const VideoPlayer = ({ anime, token, id, season, episode }) => {
             // player.on('aderror', (error) => {
             //     console.log('aderror event fired:', error);
             // });
-            //
-            //
-            // return () => {
-            //     player.dispose();
-            // };
-            const player = new Player(videoRef.current)
-
-            player.on("ready", () => {
-                console.log('ready')
-            })
         }
+    }
+
+    useEffect(() => {
+
     }, [videoSource])
 
     return (
         <div className={'player-wrapper'}>
 
             {
-                videoSource !== '' &&
-                <iframe
-                    ref={videoRef}
-                    title={"VideoPlayer"}
-                    allowFullScreen
-                    src={videoSource}
-                    frameBorder={0}
-                >
-                </iframe>
+                videoSource !== '' ?
+                    <video
+                        ref={videoRef}
+                        className={'video-js'}
+                    >
+                        <source src={videoSource}/>
+                    </video>
+                    : null
             }
+
         </div>
     );
 };

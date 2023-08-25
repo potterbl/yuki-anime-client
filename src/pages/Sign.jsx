@@ -4,7 +4,8 @@ import '../style/Sign.css'
 import WatchHeader from "../components/WatchHeader";
 import SignUp from "../components/SignUp";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
+import {useGetMeMutation} from "../store/userApi/user.api";
+import Forget from "../components/Forget";
 
 const Sign = () => {
     const {method} = useParams()
@@ -12,37 +13,34 @@ const Sign = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (method !== 'login' && method !== 'sign') {
+        if (method !== 'login' && method !== 'sign' && method !== 'forget') {
             navigate('/');
         }
     }, [method, navigate]);
 
-    const getMe = () => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            axios
-                .post('https://yuki-anime.up.railway.app/auth/getMe', {
-                    token: token
-                })
-                .then((res) => {
-                    navigate('/')
-                })
-                .catch((err) => {
-                    console.log('error:' + err)
-                })
-        }
+    const token = localStorage.getItem('token')
+    const [getMe] = useGetMeMutation()
+
+    if (token) {
+        const fetchData = async () => {
+            const res = await getMe({token})
+            if (res.data) {
+                navigate('/')
+            }
+        };
+        fetchData();
     }
-    getMe()
 
     return (
         <div className="sign-page">
             <WatchHeader isAnime={true}/>
             {method === 'login' ?
-                    <Login/>
+                <Login/>
                 : method === 'sign' ?
                     <SignUp/>
-                :
-                    null
+                    : method === 'forget' ?
+                        <Forget/> :
+                        null
             }
         </div>
     );

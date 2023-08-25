@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/yuki.iml" filepath="$PROJECT_DIR$/.idea/yuki.iml" />
       <module fileurl="file://$PROJECT_DIR$/../yuki-anime/.idea/yuki-anime.iml" filepath="$PROJECT_DIR$/../yuki-anime/.idea/yuki-anime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../yuki-server/.idea/yuki-server.iml" filepath="$PROJECT_DIR$/../yuki-server/.idea/yuki-server.iml" />
     </modules>
   </component>
 </project>

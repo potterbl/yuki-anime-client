@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import emailIcon from '../images/Email.svg'
 import passwordIcon from '../images/Password.svg'
 import validator from "validator";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useRegistrationMutation} from "../store/userApi/user.api";
 
 const SignUp = () => {
     const navigate = useNavigate()
@@ -50,21 +50,19 @@ const SignUp = () => {
         }
     }, [email, password, passwordVerify]);
 
-    const registerMe = (email, password) => {
-        axios
-            .post('https://yuki-anime.up.railway.app/auth/registration', {
-                login: email,
-                password: password
-            })
-            .then(res => {
-                console.log(res.data)
-                localStorage.setItem('token', res.data)
-                navigate('/')
-            })
-            .catch(err => {
-                console.log(err)
-                setIsBadAccount(true)
-            })
+    const [registerMe] = useRegistrationMutation()
+
+    const handleRegistration = async (login, password) => {
+        const payload = {login: login, password: password}
+
+        const res = await registerMe({payload})
+
+        if(res.data) {
+            localStorage.setItem('token', res.data.token)
+            navigate('/')
+        } else if (res.error) {
+            setIsBadAccount(true)
+        }
     }
 
     return (
@@ -114,7 +112,7 @@ const SignUp = () => {
             </div>
             <div className="sign-btns">
                 <button
-                    onClick={() => registerMe(email,password)}
+                    onClick={() => handleRegistration(email, password)}
                     className={`sign-btn ${isBadMail || isBadPass || isBadPassVerify ? 'sign-btn__disabled' : ''}`}
                 >
                     Sign Up
@@ -125,7 +123,12 @@ const SignUp = () => {
                 >
                     У важ вже є акаунт?
                 </p>
-                <p className="sign-btns__remeber">Забули пароль?</p>
+                <p
+                    className="sign-btns__remeber"
+                    onClick={() => navigate('/auth/forget')}
+                >
+                    Забули пароль?
+                </p>
             </div>
         </div>
     );

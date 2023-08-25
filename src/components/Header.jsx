@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate()
     return (
         <div className="header">
-            <h1 className="logotype">LOGO</h1>
+            <h1 className="logotype">YUKI</h1>
             <div className="header-components">
                 <img src={search} alt=""/>
                 <p className="header-par">Популярне</p>

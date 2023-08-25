@@ -1,24 +1,20 @@
 .preview__and__popular{
     width: 100%;
     height: 100vh;
-    padding: 90px 59px;
+    padding: 120px 59px;
     display: flex;
     flex-direction: column;
-    row-gap: 184px;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: flex-start;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     transition: all .3s ease;
 }
-.preview__and__popular-textbox{
-    width: 891px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 121px;
-}
 .textbox-heading{
     font-size: 72px;
+    width: 80%;
+    word-break: break-word;
 }
 .textbox-container{
     display: flex;
@@ -27,25 +23,25 @@
     align-items: flex-start;
 }
 .textbox-description{
-    font-size: 30px;
+    width: 50%;
+    word-break: break-word;
+    font-size: 18px;
 }
 .popular-collection{
-    height: 285px;
+    height: auto;
+    width: 100%;
+    max-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-/*.popular-collection::-webkit-scrollbar{*/
-/*    width: 0;*/
-/*    height: 0;*/
-/*}*/
 .popular-heading{
     font-size: 36px;
 }
 .anime-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     overflow: hidden;
 }
 
@@ -57,8 +53,8 @@
     width: 100%;
     background-color: purple;
     pointer-events: none;
-    background-size: 100% auto;
-    background-position: top center;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     border: 0;
 }
@@ -70,12 +66,31 @@
     border-radius: 12px;
     background-image: url('../images/play.svg');
     background-repeat: no-repeat;
-    background-size: 50px;
+    background-size: auto 80%;
     font-size: 40px;
     background-position: 31px center;
     border: 0;
 }
 .swiper{
     width: 100%;
-    height: 219px;
+    height: max-content;
+    cursor: pointer;
+}
+@media(max-width: 960px){
+    .textbox-heading{
+        font-size: 64px;
+        width: 100%;
+    }
+    .textbox-description{
+        font-size: 14px;
+    }
+    .popular-heading{
+        font-size: 28px;
+    }
+    .textbox-play{
+        padding: 7px 31px 7px 107px;
+        background-image: url('../images/play.svg');
+        font-size: 32px;
+        border-radius: 16px;
+    }
 }

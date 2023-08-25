@@ -1,14 +1,17 @@
 import React, { useRef, useState, useEffect } from 'react';
 import '../style/Search.css';
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {useGetAllCollectionsQuery} from "../store/collectionApi/collections.api";
 
 const Search = (props) => {
+    const navigate = useNavigate()
+
     const [isSearch, setIsSearch] = useState(false);
     const [search, setSearch] = useState('');
     const [isEmpty, setIsEmpty] = useState(true);
     const searchRef = useRef(null);
 
-    const [animes, setAnimes] = useState([])
+    const { data: animes } = useGetAllCollectionsQuery()
 
     useEffect(() => {
         if (isSearch) {
@@ -22,22 +25,6 @@ const Search = (props) => {
         setIsEmpty(search === '');
     }, [search]);
 
-    const getAnimes = () => {
-        axios
-            .get('https://yuki-anime.up.railway.app/collections')
-            .then(res => {
-                setAnimes(res.data)
-                console.log(123)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-    useEffect(() => {
-        getAnimes()
-    }, [])
-
     return (
         <div className="search">
             <button
@@ -49,14 +36,24 @@ const Search = (props) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className={`search-input ${isSearch ? 'search-enabled' : ''}`}
-                onBlur={() => setIsSearch(false)}
+                onBlur={() => {
+                    setTimeout(() => {
+                        setIsSearch(false)
+                    }, 100)
+                }}
                 ref={searchRef}
             />
             <div className={`search-results ${isEmpty ? '' : 'search-results-enabled'}`}>
-                {animes
+                {animes && animes
                     .filter((anime) => anime.title.toLowerCase().includes(search.toLowerCase()))
                     .map((anime) => (
-                        <div className="search-result" key={anime.title}>
+                        <div
+                            className="search-result"
+                            key={anime.title}
+                            onClick={() => {
+                                navigate(`/watch/anime/${anime._id}/ep/1/s/1`)
+                            }}
+                        >
                             <p className="result-paragraph">{anime.title}</p>
                         </div>
                     ))}

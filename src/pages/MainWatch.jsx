@@ -1,28 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PreviewNPopular from "../components/PreviewNPopular";
 import WatchCollections from "../components/WatchCollections";
 import Footer from "../components/Footer";
 import WatchHeader from "../components/WatchHeader";
-import axios from "axios";
+import {useGetAllCollectionsQuery} from "../store/collectionApi/collections.api.js";
 
 const MainWatch = () => {
-    const [animes, setAnimes] = useState([])
 
-    const getAnimes = () => {
-        axios
-            .get('https://yuki-anime.up.railway.app/collections')
-            .then(res => {
-                setAnimes(res.data)
-                console.log(123)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    const {data: animes, isLoading} = useGetAllCollectionsQuery()
+
+    if(isLoading){
+        return <div>Loading</div>
     }
-
-    useEffect(() => {
-        getAnimes()
-    }, [])
 
     return (
         <div>

@@ -2,48 +2,58 @@ import React, {useEffect, useState} from 'react';
 import WatchHeader from "../components/WatchHeader";
 import '../style/HistoryPage.css'
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import Footer from "../components/Footer";
+import {useGetMeMutation} from "../store/userApi/user.api.js";
+import {useGetMultiplyMutation} from "../store/collectionApi/collections.api.js";
 
 const HistoryPage = () => {
     const navigate = useNavigate()
-    const [anime, setAnime] = useState([])
+
+    const [isLoading, setIsLoading] = useState(true)
     const [me, setMe] = useState({})
+    const [animeHistory, setAnimeHistory] = useState([])
 
     const token = localStorage.getItem('token')
 
+    const [getMe] = useGetMeMutation()
+    const [getHistoryArray] = useGetMultiplyMutation()
 
-    useEffect(() => {
-        const getMe = () => {
-            if (token) {
-                axios
-                    .post('https://yuki-anime.up.railway.app/auth/getMe', {
-                        token: token
-                    })
-                    .then((res) => {
-                        setMe(res.data)
-                    })
-                    .catch((err) => {
-                        navigate('/auth/login')
-                    })
-            } else {
-                navigate('/auth/login')
+        if (token) {
+            const fetchMe = async () => {
+                const getMeRes = await getMe({token})
+
+                if (getMeRes.data) {
+                    setMe(getMeRes.data)
+                    if(getMeRes.data.history.length > 0){
+                        const fetchHistory = async () => {
+                            const historyArray = getMeRes.data.history.map(historyItem => historyItem.animeId);
+                            const getHistoryArrayRes = await getHistoryArray(historyArray)
+
+                            if (getHistoryArrayRes.data) {
+                                setAnimeHistory(getHistoryArrayRes.data)
+                            }
+                            if (getHistoryArrayRes.error) {
+                                console.log(getHistoryArrayRes.error)
+                            }
+                        };
+                        fetchHistory()
+                    }
+                }
+                if (getMeRes.error) {
+                    navigate('/auth/login')
+                }
             }
+            fetchMe()
+        } else {
+            navigate('/auth/login')
         }
 
-        (() => {
-            axios
-                .get('https://yuki-anime.up.railway.app/collections')
-                .then((res) => {
-                    setAnime(res.data);
-                })
-                .catch((err) => {
-                    navigate('/auth/login');
-                });
-        })()
+    useEffect(() => {
+        if(animeHistory.length && Object.keys(me).length){
+            setIsLoading(false);
+        }
+    }, [animeHistory, me]);
 
-        getMe();
-    }, [navigate, token])
     return (
         <>
             <WatchHeader isAnime={true}/>
@@ -54,14 +64,14 @@ const HistoryPage = () => {
                 </div>
                 <div className="history">
                     {
-                        anime.length && me.history &&
-                        me.history.map(historyItem => (
+                        !isLoading &&
+                        animeHistory.map(historyItem => (
                             <button
-                                key={historyItem.animeId}
+                                key={historyItem._id}
                                 className="animetest"
-                                style={{backgroundImage: `url(${anime.find(anime => anime._id === historyItem.animeId).image})`}}
+                                style={{backgroundImage: `url(${historyItem.image})`}}
                                 onClick={() => {
-                                    navigate(`/watch/anime/${historyItem.animeId}/ep/${historyItem.episode}/s/${historyItem.season}`);
+                                    navigate(`/watch/anime/${historyItem._id}/ep/${me.history.find(h => h.animeId === historyItem._id).episode}/s/${me.history.find(h => h.animeId === historyItem._id).season}`);
                                 }}
                             >
 

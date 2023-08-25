@@ -3,8 +3,8 @@ import validator from 'validator';
 import '../style/Login.css';
 import emailIcon from "../images/Email.svg";
 import passwordIcon from "../images/Password.svg";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useLoginMutation} from "../store/userApi/user.api";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -21,8 +21,8 @@ const Login = () => {
     const [isBadAccount, setIsBadAccount] = useState(false)
 
     useEffect(() => {
-        setEmail(email.trim()); // Убираем начальные и конечные пробелы из email
-        setPassword(password.trim()); // Убираем начальные и конечные пробелы из пароля
+        setEmail(email.trim());
+        setPassword(password.trim());
 
         setIsEmail(email !== '');
         setIsPassword(password !== '');
@@ -40,21 +40,17 @@ const Login = () => {
         }
     }, [email, password]);
 
-    const loginMe = (email, password) => {
-        axios
-            .post('https://yuki-anime.up.railway.app/auth/login', {
-                login: email,
-                password: password
-            })
-            .then(res => {
-                console.log(res.data)
-                localStorage.setItem('token', res.data)
-                navigate('/')
-            })
-            .catch(err => {
-                console.log(err)
-                setIsBadAccount(true)
-            })
+    const [loginMe] = useLoginMutation()
+
+    const handleLogin = async (email, password) => {
+        const res = await loginMe({login: email, password})
+        if(res.data) {
+            localStorage.setItem('token', res.data.token)
+            navigate('/')
+        }
+        if(res.error){
+            setIsBadAccount(true)
+        }
     }
 
     return (
@@ -90,7 +86,7 @@ const Login = () => {
             </div>
             <div className="sign-btns">
                 <button
-                    onClick={() => loginMe(email,password)}
+                    onClick={() => handleLogin(email, password)}
                     className={`sign-btn ${isBadMail || isBadPass ? 'sign-btn__disabled' : ''}`}
                 >
                     Sign Up
@@ -101,7 +97,12 @@ const Login = () => {
                 >
                     У важ ще немає аккаунту?
                 </p>
-                <p className="sign-btns__remeber">Забули пароль?</p>
+                <p
+                    className="sign-btns__remeber"
+                    onClick={() => navigate('/auth/forget')}
+                >
+                    Забули пароль?
+                </p>
             </div>
         </div>
     );
