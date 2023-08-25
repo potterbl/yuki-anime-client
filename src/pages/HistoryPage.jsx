@@ -15,9 +15,11 @@ const HistoryPage = () => {
 
     const token = localStorage.getItem('token')
 
-    const [getMe] = useGetMeMutation();
+    const [getMe] = useGetMeMutation()
     const [getHistoryArray] = useGetMultiplyMutation()
 
+    useEffect(() => {
+        if (token) {
             const fetchMe = async () => {
                 const getMeRes = await getMe({token})
 
@@ -28,13 +30,13 @@ const HistoryPage = () => {
                             const historyArray = getMeRes.data.history.map(historyItem => historyItem.animeId);
                             const getHistoryArrayRes = await getHistoryArray(historyArray)
 
-                            if (getHistoryArrayRes.data) {
+                            if(getHistoryArrayRes.data){
                                 setAnimeHistory(getHistoryArrayRes.data)
                             }
-                            if (getHistoryArrayRes.error) {
+                            if(getHistoryArrayRes.error){
                                 console.log(getHistoryArrayRes.error)
                             }
-                        };
+                        }
                         fetchHistory()
                     }
                 }
@@ -42,10 +44,11 @@ const HistoryPage = () => {
                     navigate('/auth/login')
                 }
             }
-
-            useEffect(() => {
-                fetchMe()
-            }, [fetchMe])
+            fetchMe()
+        } else {
+            navigate('/auth/login')
+        }
+    }, [token, navigate]);
 
     useEffect(() => {
         if(animeHistory.length && Object.keys(me).length){

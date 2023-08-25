@@ -21,16 +21,17 @@ const Sign = () => {
     const token = localStorage.getItem('token')
     const [getMe] = useGetMeMutation()
 
-        const fetchData = async () => {
-            const res = await getMe({token})
-            if (res.data) {
-                navigate('/')
-            }
-        };
-
     useEffect(() => {
-        fetchData()
-    }, [fetchData])
+        if( token ) {
+            const fetchData = async () => {
+                const res = await getMe({token})
+                if(res.data){
+                    navigate('/')
+                }
+            }
+            fetchData()
+        }
+    }, [getMe, navigate, token])
 
     return (
         <div className="sign-page">

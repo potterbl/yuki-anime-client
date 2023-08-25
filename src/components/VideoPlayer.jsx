@@ -27,85 +27,93 @@ const VideoPlayer = ({ anime, token, id, season, episode }) => {
         }
     }
 
+    const fetchVideo = async (animeId, season, episode) => {
+        const getVideoRes = await getVideo({animeId, season, episode})
 
+        if(getVideoRes.data){
+            setVideoSource(getVideoRes.data.link)
+        }
+        if(getVideoRes.error){
+            console.log(getVideoRes.error)
+        }
+    }
 
     useEffect(() => {
-        const fetchVideo = async (animeId, season, episode) => {
-            const getVideoRes = await getVideo({animeId, season, episode})
-
-            if(getVideoRes.data){
-                setVideoSource(getVideoRes.data.link)
-            }
-            if(getVideoRes.error){
-                console.log(getVideoRes.error)
-            }
-        }
         fetchVideo(id,season,episode)
-    }, [episode, getVideo, id, season])
+
+    }, [])
+
+
     useEffect(() => {
         if(videoSource !== ''){
-                const player = videojs(videoRef.current, {
-                    aspectRatio: "16:9",
-                    controls: true,
-                    playbackRates: [0.5, 1, 1.5, 2],
-                    controlBar: {
-                        skipButtons: {
-                            forward: 5,
-                            backward: 5
+            const player = videojs(videoRef.current, {
+                aspectRatio: "16:9",
+                controls: true,
+                playbackRates: [0.5, 1, 1.5, 2],
+                controlBar: {
+                    skipButtons: {
+                        forward: 5,
+                        backward: 5
+                    }
+                },
+                userActions: {
+                    hotkeys: function (event) {
+                        if (event.key === "ArrowRight") {
+                            this.currentTime(this.currentTime() + 5);
                         }
-                    },
-                    userActions: {
-                        hotkeys: function (event) {
-                            if (event.key === "ArrowRight") {
-                                this.currentTime(this.currentTime() + 5);
-                            }
-                            if (event.key === "ArrowLeft") {
-                                this.currentTime(this.currentTime() - 5);
-                            }
-                            if (event.key === "ArrowUp") {
-                                this.volume(this.volume() + 0.1);
-                            }
-                            if (event.key === "ArrowDown") {
-                                this.volume(this.volume() - 0.1);
-                            }
+                        if (event.key === "ArrowLeft") {
+                            this.currentTime(this.currentTime() - 5);
+                        }
+                        if (event.key === "ArrowUp") {
+                            this.volume(this.volume() + 0.1);
+                        }
+                        if (event.key === "ArrowDown") {
+                            this.volume(this.volume() - 0.1);
                         }
                     }
-                });
+                }
+            });
 
-                player.on("play", () => {
-                    handleUpdateHistory(token, id, season, episode)
-                    updatePopularity(id)
-                })
+            player.on("play", () => {
+                handleUpdateHistory(token, id, season, episode)
+                updatePopularity(id)
+            })
 
-                // player.on("ready", () => {
-                //     player.ads({
-                //         prerollTimeout: 1000,
-                //         adTagUrl: video
-                //     })
-                // })
-                //
-                // player.on('adsready', () => {
-                //     console.log('adsready event fired');
-                //     player.ads.startLinearAdMode();
-                // });
-                //
-                // player.on('adstart', () => {
-                //     console.log('adstart event fired');
-                // });
-                // player.on('adend', () => {
-                //     console.log('adend event fired');
-                //     player.ads.endLinearAdMode();
-                // });
-                //
-                // player.on('adtimeout', () => {
-                //     console.log('adtimeout event fired');
-                // });
-                //
-                // player.on('aderror', (error) => {
-                //     console.log('aderror event fired:', error);
-                // });
+            // player.on("ready", () => {
+            //     player.ads({
+            //         prerollTimeout: 1000,
+            //         adTagUrl: video
+            //     })
+            // })
+            //
+            // player.on('adsready', () => {
+            //     console.log('adsready event fired');
+            //     player.ads.startLinearAdMode();
+            // });
+            //
+            // player.on('adstart', () => {
+            //     console.log('adstart event fired');
+            // });
+            // player.on('adend', () => {
+            //     console.log('adend event fired');
+            //     player.ads.endLinearAdMode();
+            // });
+            //
+            // player.on('adtimeout', () => {
+            //     console.log('adtimeout event fired');
+            // });
+            //
+            // player.on('aderror', (error) => {
+            //     console.log('aderror event fired:', error);
+            // });
+
+
+            return () => {
+                player.dispose();
+            };
+
         }
-    }, [videoSource, episode, handleUpdateHistory, id, season, token, updatePopularity])
+    }, [videoSource])
 
     return (
         <div className={'player-wrapper'}>
