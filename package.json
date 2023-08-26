@@ -2,7 +2,6 @@
   "name": "yuki",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://potterbl.github.io/yuki-anime-client",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@sweetalert2/theme-dark": "^5.0.15",
