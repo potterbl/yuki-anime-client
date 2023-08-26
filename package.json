@@ -2,7 +2,7 @@
   "name": "yuki",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yuki-animes.netlify.app/",
+  "homepage": "https://potterbl.github.io/yuki-anime-client",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@sweetalert2/theme-dark": "^5.0.15",
@@ -45,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.0.0"
   }
 }
