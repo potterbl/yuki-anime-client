@@ -22,7 +22,9 @@ const PreviewNPopular = (props) => {
         {animes ?
                 <div
                     className="preview__and__popular"
-                    style={{backgroundImage: `linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(255,255,255,0) 100%), url(${animes[slideIndex].preview}) `}}
+                    style={{
+                        backgroundImage: `linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, rgba(255,255,255,0) 100%), url(${animes[slideIndex].preview})`,
+                }}
                 >
                         <h2 className="textbox-heading">{
                             window.innerWidth < 600 && animes[slideIndex].title.split(' ').length > 3 ?
