@@ -5,3 +5,18 @@
     row-gap: 60px;
     align-items: center;
 }
+@media(max-width: 525px){
+    .login{
+        width: 95%;
+    }
+}
+@media(max-height: 812px){
+    .login{
+        row-gap: 24px;
+    }
+}
+@media(max-height: 650px){
+    .login{
+        row-gap: 16px;
+    }
+}

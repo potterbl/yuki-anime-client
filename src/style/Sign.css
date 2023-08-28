@@ -62,3 +62,11 @@
 .sign-btns__remeber{
     cursor: pointer;
 }
+
+@media(max-width: 385px){
+    .sign-inp{
+        padding: 24px 24px 24px 64px;
+        background-position: 12px center;
+        background-size: 44px;
+    }
+}

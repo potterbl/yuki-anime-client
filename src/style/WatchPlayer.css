@@ -39,6 +39,7 @@
     width: 100%;
     height: calc(100vh - 144px);
     overflow-y: auto;
+    z-index: 3;
 }
 .watch__player-right::-webkit-scrollbar{
     width: 0;
@@ -68,23 +69,24 @@
     padding: 36px 0;
 }
 
+.menu-episode{
+    width: 100%;
+    height: 42px;
+    border: 1px solid white;
+    border-radius: 0;
+    background-image: url('../images/menu.svg');
+    background-color: black;
+    background-size: 36px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top:144px;
+    left: 0;
+    z-index: 5;
+}
 @media(max-width: 689px){
     .header-bg{
         background-color: black;
-    }
-    .menu-episode{
-        width: 100%;
-        height: 42px;
-        border: 1px solid white;
-        border-radius: 0;
-        background-image: url('../images/menu.svg');
-        background-color: black;
-        background-size: 36px;
-        background-position: center;
-        background-repeat: no-repeat;
-        position: fixed;
-        top:144px;
-        left: 0;
     }
     .watch__player{
         flex-direction: column-reverse;
