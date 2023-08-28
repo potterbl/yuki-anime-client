@@ -31,26 +31,28 @@ const WatchPlayer = (props) => {
                                 >
 
                                 </button>
-                                <div key={`season-${seasonIndex}`}
-                                     className="watch__player-right-heading watch__player-right-row">
-                                    <h2 className="episode">Season {seasonIndex + 1}</h2>
-                                </div>
-                                {
-                                    seasonArr.map((episodeObj, episodeIndex) => (
-                                        <div key={`season-${seasonIndex}-episode-${episodeIndex}`}
-                                             className={`watch__player-right-row ${(seasonIndex + 1).toString() === season.toString() && episodeObj.episode.toString() === episode.toString() ? 'watch__player-right-row-active' : ''}`}
-                                            onClick={() => {
-                                                navigate(`/watch/anime/${id}/ep/${episodeIndex + 1}/s/${seasonIndex + 1}`)
-                                                window.location.reload()
-                                            }}
-                                        >
-                                            <p className="episode">Episode {episodeObj.episode}</p>
-                                            <div className="episode-description">
-                                                <p>{episodeObj.description}</p>
+                                <div className={`phone-menu ${isMenu ? 'menu-shown' : ''}`}>
+                                    <div key={`season-${seasonIndex}`}
+                                         className="watch__player-right-heading watch__player-right-row">
+                                        <h2 className="episode">Season {seasonIndex + 1}</h2>
+                                    </div>
+                                    {
+                                        seasonArr.map((episodeObj, episodeIndex) => (
+                                            <div key={`season-${seasonIndex}-episode-${episodeIndex}`}
+                                                 className={`watch__player-right-row ${(seasonIndex + 1).toString() === season.toString() && episodeObj.episode.toString() === episode.toString() ? 'watch__player-right-row-active' : ''}`}
+                                                 onClick={() => {
+                                                     navigate(`/watch/anime/${id}/ep/${episodeIndex + 1}/s/${seasonIndex + 1}`)
+                                                     window.location.reload()
+                                                 }}
+                                            >
+                                                <p className="episode">Episode {episodeObj.episode}</p>
+                                                <div className="episode-description">
+                                                    <p>{episodeObj.description}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))
-                                }
+                                        ))
+                                    }
+                                </div>
                             </>
                         ))
                     :
