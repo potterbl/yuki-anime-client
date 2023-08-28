@@ -82,7 +82,7 @@
     position: absolute;
     top: 144px;
     left: 0;
-    z-index: 10;
+    z-index: 3;
 }
 @media(max-width: 689px){
     .header-bg{
