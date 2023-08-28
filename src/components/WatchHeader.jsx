@@ -37,7 +37,9 @@ const WatchHeader = (props) => {
                         onClick={() => navigate('/')}
                 >
                 </button>
-                <h1>YUKI</h1>
+                {
+                    (window.innerWidth >= 440 && !props.isAnime) && <h1>YUKI</h1>
+                }
             </div>
             <div className="watch__header-buttons">
                 <Search animes={props.animes}/>

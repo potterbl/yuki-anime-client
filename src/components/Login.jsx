@@ -89,7 +89,7 @@ const Login = () => {
                     onClick={() => handleLogin(email, password)}
                     className={`sign-btn ${isBadMail || isBadPass ? 'sign-btn__disabled' : ''}`}
                 >
-                    Sign Up
+                    Log In
                 </button>
                 <p
                     className="sign-btns__login-sign"

@@ -21,7 +21,7 @@ const WatchCollections = (props) => {
                             window.innerWidth <= 1024 && window.innerWidth > 700 ?
                                 4.15 :
                                 window.innerWidth <= 700 && window.innerWidth > 425 ?
-                                    3.15 : 1
+                                    2.15 : 1.15
                     }
                     className={'swiper'}
                     spaceBetween={10}

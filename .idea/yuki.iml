@@ -9,7 +9,5 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="yuki-anime" />
-    <orderEntry type="module" module-name="yuki-server" />
-    <orderEntry type="module" module-name="yuki-server" />
   </component>
 </module>

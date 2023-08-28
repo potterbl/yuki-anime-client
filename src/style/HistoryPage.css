@@ -26,3 +26,22 @@
     background-position: center;
     background-size: cover;
 }
+@media(max-width: 914px){
+    .history{
+        grid-template-columns: repeat(4, auto);
+    }
+}
+@media(max-width: 579px){
+    .history{
+        grid-template-columns: repeat(3, auto);
+    }
+}
+@media(max-width: 450px){
+    .history{
+        padding: 0 24px;
+        grid-template-columns: repeat(2, auto);
+    }
+    .history__heading{
+        padding: 0 24px;
+    }
+}

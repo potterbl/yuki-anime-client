@@ -4,6 +4,7 @@ import WatchCollections from "../components/WatchCollections";
 import Footer from "../components/Footer";
 import WatchHeader from "../components/WatchHeader";
 import {useGetAllCollectionsQuery} from "../store/collectionApi/collections.api.js";
+import {useDispatch} from "react-redux";
 
 const MainWatch = () => {
 

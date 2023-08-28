@@ -36,3 +36,9 @@
     column-gap: 24px;
     align-items: center;
 }
+
+@media(max-width: 440px){
+    .watch__header{
+        padding: 48px 12px;
+    }
+}

@@ -82,7 +82,7 @@
         width: 100%;
     }
     .textbox-description{
-        font-size: 14px;
+        font-size: 16px;
     }
     .popular-heading{
         font-size: 28px;
@@ -90,6 +90,24 @@
     .textbox-play{
         padding: 7px 31px 7px 107px;
         background-image: url('../images/play.svg');
+        font-size: 32px;
+        border-radius: 16px;
+    }
+}
+@media(max-width: 574px){
+    .preview__and__popular{
+        padding: 120px 24px 60px 24px;
+    }
+}
+@media(max-width: 414px){
+    .textbox-heading{
+        font-size: 52px;
+    }
+}
+@media(max-width: 440px){
+    .textbox-play{
+        padding: 7px 31px 7px 64px;
+        background-position: 20px center;
         font-size: 32px;
         border-radius: 16px;
     }

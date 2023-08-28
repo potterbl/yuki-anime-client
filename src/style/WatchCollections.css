@@ -29,3 +29,8 @@
         font-size: 28px;
     }
 }
+@media(max-width: 574px){
+    .watch__collections{
+        padding: 0 24px 60px 24px;
+    }
+}
