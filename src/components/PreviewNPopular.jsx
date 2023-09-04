@@ -43,12 +43,10 @@ const PreviewNPopular = (props) => {
 
                                             if (window.innerWidth < 600 && window.innerWidth > 425) {
                                                 return description.slice(0, 80);
-                                            } else if (window.innerWidth <= 460 && titleWordCount >= 2) {
+                                            } else if (window.innerWidth <= 460 && titleWordCount >= 1) {
                                                 return description.slice(0, 80);
-                                            } else if (window.innerWidth <= 460 && titleWordCount > 2) {
+                                            } else if (window.innerWidth <= 460 && titleWordCount > 1) {
                                                 return description.slice(0, 50);
-                                            } else if(window.innerWidth <= 420 && window.innerHeight <=740 && titleWordCount === 1) {
-                                                return description.slice(0, 70);
                                             } else {
                                                 return description.slice(0, 240);
                                             }
